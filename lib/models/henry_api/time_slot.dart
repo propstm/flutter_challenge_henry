@@ -9,7 +9,7 @@ class TimeSlot {
   final String providerName;
   final String prettyStartTime;
   final String prettyEndTime;
-  final bool isAvailable;
+  late bool isAvailable;
 
   TimeSlot(
       {required this.id,

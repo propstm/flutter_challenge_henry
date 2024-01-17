@@ -42,32 +42,70 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
       appBar: AppBar(
         title: Text(widget.user.fullName),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: ListView.builder(
-            itemCount: schedule.length ?? 0,
-            itemBuilder: (BuildContext context, int index) {
-              final timeslot = schedule[index];
-              return ListTile(
-                onTap: () => tappedTile(timeslot),
-                trailing: Icon(Icons.arrow_right_sharp),
-                title: Row(
-                  children: <Widget>[
-                    Text(
-                      '${timeslot.prettyStartTime} - ${timeslot.prettyEndTime}',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Spacer(), // use Spacer
-                    Text('${timeslot.providerName}'),
-                  ],
-                ),
-              );
-            }),
-      ),
+      body: ListView.builder(
+          itemCount: schedule.length,
+          itemBuilder: (BuildContext context, int index) {
+            final timeslot = schedule[index];
+            print(
+                'start time: ${timeslot.prettyStartTime} is available ${timeslot.isAvailable}');
+            String providerNameOrUnavailable = timeslot.isAvailable
+                ? timeslot.providerName
+                : 'Time unavailable';
+            return ListTile(
+              tileColor:
+                  timeslot.isAvailable ? Colors.transparent : Colors.grey,
+              onTap: () => timeslot.isAvailable
+                  ? _showConfirmationDialog(context, timeslot)
+                  : (),
+              trailing: Icon(Icons.arrow_right_sharp),
+              title: Row(
+                children: <Widget>[
+                  Text(
+                    '${timeslot.prettyStartTime} - ${timeslot.prettyEndTime}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Spacer(), // use Spacer
+                  Text('${providerNameOrUnavailable}'),
+                ],
+              ),
+            );
+          }),
     );
   }
 
   tappedTile(TimeSlot slot) {
     print('TAPPED ON ${slot}');
+  }
+
+  Future<void> _showConfirmationDialog(
+      BuildContext context, TimeSlot slot) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Appointment Confirmation'),
+          content: Text(
+              'Please confirm that you would like to schedule an appointment for ${slot.prettyStartTime} with ${slot.providerName}.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                // Handle deny action
+              },
+              child: Text('Deny'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                // Handle confirm action
+                // call web service and update value.
+              },
+              child: Text('Confirm'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

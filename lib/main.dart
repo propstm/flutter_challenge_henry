@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: ListView.builder(
-          itemCount: userList.length ?? 0,
+          itemCount: userList.length,
           itemBuilder: (BuildContext context, int index) {
             final userObject = userList[index];
             return ListTile(
