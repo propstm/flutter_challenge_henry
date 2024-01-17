@@ -3,6 +3,12 @@
 - Sample project assumes APIs are being built and some static data is used for sample
 - A mock user list with various roles is used and based on role users see one of two detail pages.
 - Strongly typed data models have been created for users and scheduling
+- Users with a provider role can make a date and time selection to create a timeblock
+- When providers have selected a date, start time, and end time. Upon clicking the save button the DateTime values are passed along with providerId to the stub for the webservice, the values are logged out to the conosle.
+- Users with a client role are shown a list of timeblocks, or 15 minute segments
+- When client users select a segment they are prompted to reserve that timeslot and a web service call to save that has been stubbed out with logging of the parameters.
+
+  Video of app functionality available on [Google Drive](https://drive.google.com/file/d/1o-zg_cwMuilRj99WVsjq_GIbrtM-1Fr-/view?usp=sharing)
 
 ## Trade-offs
 - To speed up development for client timeslot selection I did not add any dateTime data to the timeslot object and all data in mock is simple/best case scenario
