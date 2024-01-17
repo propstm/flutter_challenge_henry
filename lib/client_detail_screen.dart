@@ -40,7 +40,9 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
     // Use the Todo to create the UI.
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.user.fullName),
+        title: const Text('Appointment Registration',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.lightBlueAccent,
       ),
       body: ListView.builder(
           itemCount: schedule.length,
@@ -100,6 +102,13 @@ class _ClientDetailScreenState extends State<ClientDetailScreen> {
                 Navigator.of(context).pop(); // Close the dialog
                 // Handle confirm action
                 // call web service and update value.
+                final api = ApiService();
+                ScheduleRepository(api: api).setScheduleTimeslot(
+                    slot.providerId, widget.user.id, slot.prettyStartTime);
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text(
+                      "You will also receive an appointment confirmation sent to your email on file."),
+                ));
               },
               child: Text('Confirm'),
             ),

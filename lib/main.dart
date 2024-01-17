@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (BuildContext context, int index) {
             final userObject = userList[index];
             return ListTile(
-              onTap: () => tappedTile(userObject),
+              onTap: () => _tappedTile(userObject),
               trailing: Icon(Icons.arrow_right_sharp),
               title: Row(
                 children: <Widget>[
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // User role 100 is a provider, role 101 is a client
   // Based on role id send to provider of client screen
-  tappedTile(UserInfo user) {
+  _tappedTile(UserInfo user) {
     print('TAPPED ON ${user.fullName}');
 
     if (user.roleId == 100) {

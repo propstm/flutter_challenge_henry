@@ -19,6 +19,7 @@ var mockScheduleData = {
     {
       "id": 1,
       "providerName": "Dr. Joe Smith",
+      "providerId": 1,
       "prettyStartTime": "3:00pm",
       "prettyEndTime": "3:15pm",
       "isAvailable": false
@@ -26,6 +27,7 @@ var mockScheduleData = {
     {
       "id": 1,
       "providerName": "Dr. Joe Smith",
+      "providerId": 1,
       "prettyStartTime": "3:15pm",
       "prettyEndTime": "3:30pm",
       "isAvailable": true
@@ -33,6 +35,7 @@ var mockScheduleData = {
     {
       "id": 1,
       "providerName": "Dr. Joe Smith",
+      "providerId": 1,
       "prettyStartTime": "3:30pm",
       "prettyEndTime": "3:45pm",
       "isAvailable": true
@@ -40,9 +43,10 @@ var mockScheduleData = {
     {
       "id": 1,
       "providerName": "Dr. Joe Smith",
+      "providerId": 1,
       "prettyStartTime": "3:45pm",
       "prettyEndTime": "4:00pm",
-      "isAvailable": false
+      "isAvailable": true
     }
   ]
 };
