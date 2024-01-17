@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_api_starter/models/henry_api/user_info.dart';
+import 'package:flutter_api_starter/repository/schedule_repository.dart';
+
+import 'network/api_service.dart';
 
 class ProviderDetailScreen extends StatefulWidget {
   const ProviderDetailScreen({super.key, required this.user});
@@ -50,7 +53,9 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
     TextStyle consistentStyle = TextStyle(fontSize: 16);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.user.fullName),
+        title: Text('Time Blocking Tool',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.lightBlueAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -91,6 +96,9 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
               onPressed: () => _selectEndTime(context),
               child: Text('Select End Time'),
             ),
+            SizedBox(height: 36),
+            ElevatedButton(
+                onPressed: _saveTimeblock, child: Text('SAVE TIMEBLOCK')),
           ],
         ),
       ),
@@ -109,5 +117,21 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
         prettyDate = selectedDate.toLocal().toString().split(' ')[0];
       });
     }
+  }
+
+  void _saveTimeblock() {
+    // call web service and update value.
+    final api = ApiService();
+    ScheduleRepository(api: api).setProviderTimeblock(widget.user.id,
+        selectedDate.applied(startTime), selectedDate.applied(endTime));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Your timeblock has been saved."),
+    ));
+  }
+}
+
+extension DateTimeExtension on DateTime {
+  DateTime applied(TimeOfDay time) {
+    return DateTime(year, month, day, time.hour, time.minute);
   }
 }
